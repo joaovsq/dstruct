@@ -189,13 +189,3 @@ version( USE_PGSQL )
     // register Postgres driver
     private import ddbc.drivers.pgsqlddbc;
 }
-version(USE_MYSQL)
-{
-    // register MySQL driver
-    private import ddbc.drivers.mysqlddbc;
-}
-version(USE_ODBC)
-{
-    // register ODBC driver
-    private import ddbc.drivers.odbcddbc;
-}

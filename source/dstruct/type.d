@@ -77,51 +77,6 @@ unittest {
     b = null;
 }
 
-//struct String2
-//{
-//    private string _value;
-//    
-//    /**
-//Returns $(D true) if and only if $(D this) is in the null state.
-//*/
-//    @property bool isNull() const pure nothrow @safe
-//    {
-//        return _value is null;
-//    }
-//    
-//    /**
-//Forces $(D this) to the null state.
-//*/
-//    void nullify()
-//    {
-//        _value = null;
-//    }
-//    
-//    alias _value this;
-//}
-//
-//unittest {
-//    string a = "abc";
-//    String2 b;
-//    assert(b.isNull);
-//    assert(b is null);
-//    b = a;
-//    assert(b == "abc");
-//    b.nullify();
-//    a = b;
-//    assert(a is null);
-//    b = "123";
-//    b = null;
-//
-//    class C1 {
-//        String2 nullable_string_field;
-//    }
-//    C1 entity = new C1;
-//    String2 nv;
-//    entity.nullable_string_field = (true ? String2("abc") : nv); 
-//    entity.nullable_string_field = (false ? String2("abc") : nv); 
-//}
-
 // Exception classes
 
 /// base class for all HibernateD exceptions

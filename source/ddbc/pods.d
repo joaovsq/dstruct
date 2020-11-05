@@ -75,31 +75,6 @@ alias Nullable!DateTime NullableDateTime;
 alias Nullable!Date NullableDate;
 alias Nullable!TimeOfDay NullableTimeOfDay;
 
-/// Wrapper around string, to distinguish between Null and NotNull fields: string is NotNull, String is Null -- same interface as in Nullable
-// Looks ugly, but I tried `typedef string String`, but it is deprecated; `alias string String` cannot be distinguished from just string. How to define String better?
-struct String
-{
-    string _value;
-
-    /**
-    Returns $(D true) if and only if $(D this) is in the null state.
-    */
-    @property bool isNull() const pure nothrow @safe
-    {
-        return _value is null;
-    }
-
-    /**
-    Forces $(D this) to the null state.
-    */
-    void nullify()
-    {
-        _value = null;
-    }
-
-    alias _value this;
-}
-
 enum PropertyMemberType : int {
     BOOL_TYPE,    // bool
     BYTE_TYPE,    // byte
@@ -123,7 +98,6 @@ enum PropertyMemberType : int {
     NULLABLE_FLOAT_TYPE, // Nullable!float
     NULLABLE_DOUBLE_TYPE,// Nullable!double
     STRING_TYPE,   // string
-    NULLABLE_STRING_TYPE,   // nullable string - String struct
     SYSTIME_TYPE,
     DATETIME_TYPE, // std.datetime.DateTime
     DATE_TYPE, // std.datetime.Date
@@ -212,8 +186,6 @@ template isSupportedSimpleType(T, string m) {
             enum bool isSupportedSimpleType = true;
         } else static if (is(ReturnType!(ti) == string)) {
             enum bool isSupportedSimpleType = true;
-        } else static if (is(ReturnType!(ti) == String)) {
-            enum bool isSupportedSimpleType = true;
         } else static if (is(ReturnType!(ti) == SysTime)) {
             enum bool isSupportedSimpleType = true;
         } else static if (is(ReturnType!(ti) == DateTime)) {
@@ -280,8 +252,6 @@ template isSupportedSimpleType(T, string m) {
     } else static if (is(ti == Nullable!double)) {
         enum bool isSupportedSimpleType = true;
     } else static if (is(ti == string)) {
-        enum bool isSupportedSimpleType = true;
-    } else static if (is(ti == String)) {
         enum bool isSupportedSimpleType = true;
     } else static if (is(ti == SysTime)) {
         enum bool isSupportedSimpleType = true;
@@ -355,8 +325,6 @@ PropertyMemberType getPropertyType(ti)() {
         return PropertyMemberType.NULLABLE_DOUBLE_TYPE;
     } else static if (is(ti == string)) {
         return PropertyMemberType.STRING_TYPE;
-    } else static if (is(ti == String)) {
-        return PropertyMemberType.NULLABLE_STRING_TYPE;
     } else static if (is(ti == SysTime)) {
         return PropertyMemberType.SYSTIME_TYPE;
     } else static if (is(ti == DateTime)) {
@@ -428,8 +396,6 @@ PropertyMemberType getPropertyMemberType(T, string m)() {
         return PropertyMemberType.NULLABLE_DOUBLE_TYPE;
     } else static if (is(ti == string)) {
         return PropertyMemberType.STRING_TYPE;
-    } else static if (is(ti == String)) {
-        return PropertyMemberType.NULLABLE_STRING_TYPE;
     } else static if (is(ti == SysTime)) {
         return PropertyMemberType.SYSTIME_TYPE;
     } else static if (is(ti == DateTime)) {
@@ -487,7 +453,6 @@ static immutable bool[] ColumnTypeCanHoldNulls =
     true, //NULLABLE_FLOAT_TYPE, // Nullable!float
     true, //NULLABLE_DOUBLE_TYPE,// Nullable!double
     false, //STRING_TYPE   // string  -- treat as @NotNull by default
-    true, //NULLABLE_STRING_TYPE   // String
     false, //SYSTIME_TYPE
     false, //DATETIME_TYPE, // std.datetime.DateTime
     false, //DATE_TYPE, // std.datetime.Date
@@ -528,7 +493,6 @@ static immutable string[] ColumnTypeKeyIsSetCode =
     "(!%s.isNull)", //NULLABLE_FLOAT_TYPE, // Nullable!float
     "(!%s.isNull)", //NULLABLE_DOUBLE_TYPE,// Nullable!double
     "(%s !is null)", //STRING_TYPE   // string
-    "(%s !is null)", //NULLABLE_STRING_TYPE   // String
     "(%s != SysTime())", //SYSTIME_TYPE, // std.datetime.systime : SysTime
     "(%s != DateTime())", //DATETIME_TYPE, // std.datetime.DateTime
     "(%s != Date())", //DATE_TYPE, // std.datetime.Date
@@ -569,7 +533,6 @@ static immutable string[] ColumnTypeIsNullCode =
     "(%s.isNull)", //NULLABLE_FLOAT_TYPE, // Nullable!float
     "(%s.isNull)", //NULLABLE_DOUBLE_TYPE,// Nullable!double
     "(%s is null)", //STRING_TYPE   // string
-    "(%s is null)", //NULLABLE_STRING_TYPE   // String
     "(false)", //SYSTIME_TYPE
     "(false)", //DATETIME_TYPE, // std.datetime.DateTime
     "(false)", //DATE_TYPE, // std.datetime.Date
@@ -610,7 +573,6 @@ static immutable string[] ColumnTypeSetNullCode =
     "Nullable!float nv;", //NULLABLE_FLOAT_TYPE, // Nullable!float
     "Nullable!double nv;", //NULLABLE_DOUBLE_TYPE,// Nullable!double
     "string nv;", //STRING_TYPE   // string
-    "string nv;", //NULLABLE_STRING_TYPE   // String
     "SysTime nv;", //SYSTIME_TYPE
     "DateTime nv;", //DATETIME_TYPE, // std.datetime.DateTime
     "Date nv;", //DATE_TYPE, // std.datetime.Date
@@ -647,7 +609,6 @@ static immutable string[] ColumnTypePropertyToVariant =
     "(%s.isNull ? Variant(null) : Variant(%s.get()))", //NULLABLE_FLOAT_TYPE, // Nullable!float
     "(%s.isNull ? Variant(null) : Variant(%s.get()))", //NULLABLE_DOUBLE_TYPE,// Nullable!double
     "Variant(%s)", //STRING_TYPE   // string
-    "Variant(%s)", //NULLABLE_STRING_TYPE   // String
     "Variant(%s)", //SYSTIME_TYPE
     "Variant(%s)", //DATETIME_TYPE, // std.datetime.DateTime
     "Variant(%s)", //DATE_TYPE, // std.datetime.Date
@@ -684,7 +645,6 @@ static immutable string[] ColumnTypeDatasetReaderCode =
     "Nullable!float(r.getFloat(index))", //NULLABLE_FLOAT_TYPE, // Nullable!float
     "Nullable!double(r.getDouble(index))", //NULLABLE_DOUBLE_TYPE,// Nullable!double
     "r.getString(index)", //STRING_TYPE   // string
-    "r.getString(index)", //NULLABLE_STRING_TYPE   // String
     "r.getSysTime(index)", //SYSTIME_TYPE
     "r.getDateTime(index)", //DATETIME_TYPE, // std.datetime.DateTime
     "r.getDate(index)", //DATE_TYPE, // std.datetime.Date
@@ -1194,8 +1154,6 @@ template isSupportedSimpleTypeRef(M) {
     } else static if (is(ti == Nullable!double)) {
         enum bool isSupportedSimpleType = true;
     } else static if (is(ti == string)) {
-        enum bool isSupportedSimpleType = true;
-    } else static if (is(ti == String)) {
         enum bool isSupportedSimpleType = true;
     } else static if (is(ti == SysTime)) {
         enum bool isSupportedSimpleType = true;

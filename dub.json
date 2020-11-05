@@ -16,11 +16,18 @@
         {
             "name": "PGSQL",
             "versions": ["USE_PGSQL"],
-            "libs-posix": ["libpq"],
+            "libs-posix": ["libpq-dev"],
             "libs-windows": ["libpq"],
             "subConfigurations": {
                 "ddbc": "PGSQL"
             }
+        },
+        {
+            "name": "SQLite",
+            "versions": ["USE_SQLITE"],
+            "libs-posix": ["sqlite3"],
+            "libs-windows": ["sqlite3"],
+            "copyFiles-windows-x86_64": [ "libs/win64/sqlite3.dll" ]
         }
     ]
 }

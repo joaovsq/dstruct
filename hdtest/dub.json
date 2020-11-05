@@ -5,7 +5,7 @@
     "targetType": "executable",
     "targetPath": "bin",
     "dependencies": {
-        "hibernated": {"version": "~master", "path": "../"}
+        "dstruct": {"version": "~master", "path": "../"}
     },
     "buildRequirements": ["allowWarnings"],
     "configurations": [
