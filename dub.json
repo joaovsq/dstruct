@@ -1,0 +1,15 @@
+{
+    "name": "dstruct",
+    "description": "ORM for D language, similar to Hibernate",
+    "authors": ["Vadim Lopatin", "João V."],
+    "homepage": "https://github.com/joaovsq/dstruct",
+    "license": "BSL-1.0",
+    "dependencies": {
+    },
+    "targetType": "staticLibrary",
+    "targetPath": "lib",
+    "buildRequirements": [
+		"allowWarnings"
+    ],
+    "systemDependencies": "Depending on configuration: ODBC, PostgreSQL and/or SQLite v3"
+}
