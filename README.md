@@ -3,7 +3,7 @@ DStruct
 
 A simple ORM for D language.
 
-THIS PROJECT STARTED AS A FORK OF: https://github.com/buggins/hibernated created by Vadim Lopatin.
+This project started as a fork of https://github.com/buggins/hibernated created by Vadim Lopatin.
 
 All credits to the original author will be maintained.
 
