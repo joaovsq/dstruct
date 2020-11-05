@@ -12,7 +12,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructsession;
+module dstruct.session;
 
 import std.algorithm;
 import std.conv;
@@ -20,14 +20,14 @@ import std.stdio;
 import std.exception;
 import std.variant;
 
-import ddbc.core;
-import ddbc.common;
+import dstruct.ddbc.core;
+import dstruct.ddbc.common;
 
-import dstructtype;
-import dstructdialect;
-import dstructcore;
-import dstructmetadata;
-import dstructquery;
+import dstruct.type;
+import dstruct.dialect;
+import dstruct.core;
+import dstruct.metadata;
+import dstruct.query;
 
 // For backwards compatibily
 // 'enforceEx' will be removed with 2.089

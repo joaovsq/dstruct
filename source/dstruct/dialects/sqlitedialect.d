@@ -9,14 +9,14 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructdialects.sqlitedialect;
+module dstruct.dialects.sqlitedialect;
 
 import std.conv;
 
-import dstructdialect;
-import dstructmetadata;
-import dstructtype;
-import ddbc.core;
+import dstruct.dialect;
+import dstruct.metadata;
+import dstruct.type;
+import dstruct.ddbc.core;
 
 
 string[] SQLITE_RESERVED_WORDS = 

@@ -12,7 +12,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructmetadata;
+module dstruct.metadata;
 
 import std.ascii;
 import std.conv;
@@ -26,15 +26,15 @@ import std.typetuple;
 import std.variant;
 import std.uuid;
 
-import ddbc.core;
-import ddbc.common;
+import dstruct.ddbc.core;
+import dstruct.ddbc.common;
 
-import dstructannotations;
-import dstructcore;
-import dstructtype;
-import dstructsession;
-import dstructdialect;
-import dstructdialects.mysqldialect;
+import dstruct.annotations;
+import dstruct.core;
+import dstruct.type;
+import dstruct.session;
+import dstruct.dialect;
+import dstruct.dialects.mysqldialect;
 
 // For backwards compatibily
 // 'enforceEx' will be removed with 2.089

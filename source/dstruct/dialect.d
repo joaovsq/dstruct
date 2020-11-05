@@ -17,7 +17,7 @@ module dstructdialect;
 import std.stdio;
 import std.string;
 
-import dstructmetadata;
+import dstruct.metadata;
 
 /// Represents a dialect of SQL implemented by a particular RDBMS. -- generated from JavaDocs on org.hibernate.dialect.Dialect
 abstract class Dialect {

@@ -12,7 +12,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructquery;
+module dstruct.query;
 
 import std.ascii;
 import std.algorithm;
@@ -23,14 +23,14 @@ import std.conv;
 import std.stdio;
 import std.variant;
 
-import ddbc.core;
+import dstruct.ddbc.core;
 
-import dstructannotations;
-import dstructmetadata;
-import dstructtype;
-import dstructcore;
-import dstructdialect;
-import dstructdialects.mysqldialect;
+import dstruct.annotations;
+import dstruct.metadata;
+import dstruct.type;
+import dstruct.core;
+import dstruct.dialect;
+import dstruct.dialects.mysqldialect;
 
 
 // For backwards compatibily
@@ -1683,7 +1683,7 @@ unittest {
 unittest {
 
 	//writeln("query unittest");
-    import dstructtests;
+    import dstruct.tests;
 
     EntityMetaData schema = new SchemaInfoImpl!(User, Customer, AccountType, Address, Person, MoreInfo, EvenMoreInfo, Role);
 	QueryParser parser = new QueryParser(schema, "SELECT a FROM User AS a WHERE id = :Id AND name != :skipName OR name IS NULL  AND a.flags IS NOT NULL ORDER BY name, a.flags DESC");

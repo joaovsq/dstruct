@@ -12,7 +12,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructtests;
+module dstruct.tests;
 
 import std.algorithm;
 import std.conv;
@@ -22,7 +22,7 @@ import std.typecons;
 import std.exception;
 import std.variant;
 
-import dstructcore;
+import dstruct.core;
 
 version(unittest) {
     
@@ -197,13 +197,13 @@ version(unittest) {
         ubyte[] ubyte_array_field;
     }
     
-    import ddbc.drivers.mysqlddbc;
-    import ddbc.drivers.pgsqlddbc;
-    import ddbc.drivers.sqliteddbc;
-    import ddbc.common;
-    import dstructdialects.mysqldialect;
-    import dstructdialects.sqlitedialect;
-    import dstructdialects.pgsqldialect;
+    import dstruct.ddbc.drivers.mysqlddbc;
+    import dstruct.ddbc.drivers.pgsqlddbc;
+    import dstruct.ddbc.drivers.sqliteddbc;
+    import dstruct.ddbc.common;
+    import dstruct.dialects.mysqldialect;
+    import dstruct.dialects.sqlitedialect;
+    import dstruct.dialects.pgsqldialect;
 
     
     string[] UNIT_TEST_DROP_TABLES_SCRIPT = 

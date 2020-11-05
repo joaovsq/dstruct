@@ -11,5 +11,16 @@
     "buildRequirements": [
 		"allowWarnings"
     ],
-    "systemDependencies": "Depending on configuration: ODBC, PostgreSQL and/or SQLite v3"
+    "systemDependencies": "Depending on configuration: ODBC, PostgreSQL and/or SQLite v3",
+    "configurations": [
+        {
+            "name": "PGSQL",
+            "versions": ["USE_PGSQL"],
+            "libs-posix": ["libpq"],
+            "libs-windows": ["libpq"],
+            "subConfigurations": {
+                "ddbc": "PGSQL"
+            }
+        }
+    ]
 }

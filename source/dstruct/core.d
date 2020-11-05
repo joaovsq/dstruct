@@ -12,7 +12,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructcore;
+module dstruct.core;
 
 //public import std.ascii;
 //public import std.conv;
@@ -26,24 +26,24 @@ module dstructcore;
 //public import std.typetuple;
 //public import std.variant;
 
-public import ddbc;
+public import dstruct.ddbc;
 
-public import dstructannotations;
-public import dstructsession;
-public import dstructmetadata;
-public import dstructcore;
-public import dstructtype;
-public import dstructdialect;
+public import dstruct.annotations;
+public import dstruct.session;
+public import dstruct.metadata;
+public import dstruct.core;
+public import dstruct.type;
+public import dstruct.dialect;
 
 version( USE_SQLITE )
 {
-    public import dstructdialects.sqlitedialect;
+    public import dstruct.dialects.sqlitedialect;
 }
 version( USE_PGSQL )
 {
-    public import dstructdialects.pgsqldialect;
+    public import dstruct.dialects.pgsqldialect;
 }
 version( USE_MYSQL )
 {
-    public import dstructdialects.mysqldialect;
+    public import dstruct.dialects.mysqldialect;
 }

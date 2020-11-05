@@ -12,14 +12,14 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructtype;
+module dstruct.type;
 
 import std.datetime;
 import std.stdio;
 import std.traits;
 import std.typecons;
 
-import ddbc.core;
+import dstruct.ddbc.core;
 
 
 // convenient aliases for Nullable types
@@ -474,7 +474,7 @@ unittest {
     assert(s == "15");
     assert(s.b == 2);
 
-    import dstructmetadata;
+    import dstruct.metadata;
     TestLazy tl = new TestLazy();
 }
 
