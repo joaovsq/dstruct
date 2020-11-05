@@ -20,8 +20,8 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstruct.ddbc.common;
-import dstruct.ddbc.core;
+module ddbc.common;
+import ddbc.core;
 import std.algorithm;
 import std.exception;
 static if(__traits(compiles, (){ import std.experimental.logger; } )) {
@@ -225,7 +225,7 @@ public:
 
 /// Helper implementation of ResultSet - throws Method not implemented for most of methods.
 /// Useful for driver implementations
-class ResultSetImpl : dstruct.ddbc.core.ResultSet {
+class ResultSetImpl : ddbc.core.ResultSet {
 public:
     override int opApply(int delegate(DataSetReader) dg) { 
         int result = 0;

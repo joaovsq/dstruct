@@ -26,8 +26,8 @@ import std.typetuple;
 import std.variant;
 import std.uuid;
 
-import dstruct.ddbc.core;
-import dstruct.ddbc.common;
+import ddbc.core;
+import ddbc.common;
 
 import dstruct.annotations;
 import dstruct.core;

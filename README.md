@@ -16,6 +16,12 @@ I needed some quick bugfixes and additional features for my personal projects, i
 
 All credits to the original author will be maintained in the source code and README. The library renaming is just to avoid possible confusions. The license is the same.
 
+Libraries
+--------------------
+
+* ddbc - https://github.com/buggins/ddbc
+* derelictPQ - https://github.com/DerelictOrg/DerelictPQ
+* derelictUtils - https://github.com/DerelictOrg/DerelictUtil
 
 About the codebase
 --------------------

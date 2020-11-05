@@ -1,7 +1,7 @@
 /**
  * DDBC - D DataBase Connector - abstraction layer for RDBMS access, with interface similar to JDBC. 
  * 
- * Source file ddbc/drivers/pgsqldstruct.ddbc.d.
+ * Source file ddbc/drivers/pgsqlddbc.d.
  *
  * DDBC library attempts to provide implementation independent interface to different databases.
  * 
@@ -20,7 +20,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstruct.ddbc.drivers.pgsqlddbc;
+module ddbc.drivers.pgsqlddbc;
 
 
 version(USE_PGSQL) {
@@ -49,11 +49,11 @@ version(USE_PGSQL) {
     import std.array;
     import core.sync.mutex;
     
-    import dstruct.ddbc.common;
-    import dstruct.ddbc.core;
+    import ddbc.common;
+    import ddbc.core;
     import derelict.pq.pq;
-    //import dstruct.ddbc.drivers.pgsql;
-    import dstruct.ddbc.drivers.utils;
+    //import ddbc.drivers.pgsql;
+    import ddbc.drivers.utils;
 
     const int BOOLOID = 16;
     const int BYTEAOID = 17;
@@ -248,7 +248,7 @@ version(USE_PGSQL) {
     }
 
 
-    class PGSQLConnection : dstruct.ddbc.core.Connection {
+    class PGSQLConnection : ddbc.core.Connection {
     private:
     	string url;
     	string[string] params;
@@ -450,7 +450,7 @@ version(USE_PGSQL) {
     private:
     	PGSQLConnection conn;
     //	Command * cmd;
-    //	dstruct.ddbc.drivers.mysql.ResultSet rs;
+    //	ddbc.drivers.mysql.ResultSet rs;
     	PGSQLResultSet resultSet;
     	
     	bool closed;
@@ -575,12 +575,12 @@ version(USE_PGSQL) {
                                 case TIMESTAMPOID:
                                     //writeln("TIMESTAMPOID: " ~ s);
                                     v[col] = DateTime.fromISOExtString( s.translate( [ ' ': 'T' ] ).split( '.' ).front() );
-                                    // todo: use new function in dstruct.ddbc.utils: parseDateTime(s);
+                                    // todo: use new function in ddbc.utils: parseDateTime(s);
                                     break;
                                 case TIMESTAMPTZOID:
                                     //writeln("TIMESTAMPTZOID: " ~ s);
                                     v[col] = SysTime.fromISOExtString( s.translate( [ ' ': 'T' ] ) );
-                                    // todo: use new function in dstruct.ddbc.utils: parseSysTime(s);
+                                    // todo: use new function in ddbc.utils: parseSysTime(s);
                                     break;
                                 case TIMEOID:
                                     v[col] = parseTimeoid(s);
@@ -614,7 +614,7 @@ version(USE_PGSQL) {
             }
         }
 
-    	override dstruct.ddbc.core.ResultSet executeQuery(string query) {
+    	override ddbc.core.ResultSet executeQuery(string query) {
     		//throw new SQLException("Not implemented");
     		checkClosed();
     		lock();
@@ -872,7 +872,7 @@ version(USE_PGSQL) {
             return affected;
         }
     	
-    	override dstruct.ddbc.core.ResultSet executeQuery() {
+    	override ddbc.core.ResultSet executeQuery() {
     		checkClosed();
     		lock();
     		scope(exit) unlock();
@@ -1455,7 +1455,7 @@ version(USE_PGSQL) {
     		params["ssl"] = "true";
     		return params;
     	}
-    	override dstruct.ddbc.core.Connection connect(string url, string[string] params) {
+    	override ddbc.core.Connection connect(string url, string[string] params) {
             url = stripDdbcPrefix(url);
     		//writeln("PGSQLDriver.connect " ~ url);
     		return new PGSQLConnection(url, params);
@@ -1574,7 +1574,7 @@ version(USE_PGSQL) {
 
     __gshared static this() {
         // register PGSQLDriver
-        import dstruct.ddbc.common;
+        import ddbc.common;
         DriverFactory.registerDriverFactory("postgresql", delegate() { return new PGSQLDriver(); });
     }
 

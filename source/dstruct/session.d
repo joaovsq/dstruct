@@ -20,8 +20,8 @@ import std.stdio;
 import std.exception;
 import std.variant;
 
-import dstruct.ddbc.core;
-import dstruct.ddbc.common;
+import ddbc.core;
+import ddbc.common;
 
 import dstruct.type;
 import dstruct.dialect;

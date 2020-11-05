@@ -173,29 +173,29 @@ If you need to get / release connection multiple times, it makes sense to use Co
  License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  Author:   Vadim Lopatin
 */
-module dstruct.ddbc;
+module source.ddbc;
 
-public import dstruct.ddbc.core;
-public import dstruct.ddbc.common;
-public import dstruct.ddbc.pods;
+public import ddbc.core;
+public import ddbc.common;
+public import ddbc.pods;
 
 version( USE_SQLITE )
 {
     // register SQLite driver
-    private import dstruct.ddbc.drivers.sqliteddbc;
+    private import ddbc.drivers.sqliteddbc;
 }
 version( USE_PGSQL )
 {
     // register Postgres driver
-    private import dstruct.ddbc.drivers.pgsqlddbc;
+    private import ddbc.drivers.pgsqlddbc;
 }
 version(USE_MYSQL)
 {
     // register MySQL driver
-    private import dstruct.ddbc.drivers.mysqlddbc;
+    private import ddbc.drivers.mysqlddbc;
 }
 version(USE_ODBC)
 {
     // register ODBC driver
-    private import dstruct.ddbc.drivers.odbcddbc;
+    private import ddbc.drivers.odbcddbc;
 }

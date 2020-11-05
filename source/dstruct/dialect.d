@@ -12,7 +12,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstructdialect;
+module dstruct.dialect;
 
 import std.stdio;
 import std.string;

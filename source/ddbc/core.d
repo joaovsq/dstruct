@@ -37,7 +37,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstruct.ddbc.core;
+module ddbc.core;
 
 import std.exception;
 import std.variant;

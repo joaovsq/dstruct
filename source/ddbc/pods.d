@@ -1,7 +1,7 @@
 /**
 DDBC - D DataBase Connector - abstraction layer for RDBMS access, with interface similar to JDBC. 
 
-Source file ddbc/drivers/pgsqldstruct.ddbc.d.
+Source file ddbc/drivers/pgsqlddbc.d.
  DDBC library attempts to provide implementation independent interface to different databases.
  
  Set of supported RDBMSs can be extended by writing Drivers for particular DBs.
@@ -46,7 +46,7 @@ foreach(e; stmt.select!User.where("id < 6").orderBy("name desc")) {
  License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  Author:   Vadim Lopatin
 */
-module dstruct.ddbc.pods;
+module ddbc.pods;
 
 import std.algorithm;
 import std.traits;
@@ -58,7 +58,7 @@ import std.variant;
 
 static import std.ascii;
 
-import dstruct.ddbc.core;
+import ddbc.core;
 
 alias Nullable!byte Byte;
 alias Nullable!ubyte Ubyte;

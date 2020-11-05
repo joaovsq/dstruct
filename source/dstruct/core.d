@@ -26,7 +26,7 @@ module dstruct.core;
 //public import std.typetuple;
 //public import std.variant;
 
-public import dstruct.ddbc;
+public import ddbc;
 
 public import dstruct.annotations;
 public import dstruct.session;

@@ -197,10 +197,10 @@ version(unittest) {
         ubyte[] ubyte_array_field;
     }
     
-    import dstruct.ddbc.drivers.mysqlddbc;
-    import dstruct.ddbc.drivers.pgsqlddbc;
-    import dstruct.ddbc.drivers.sqliteddbc;
-    import dstruct.ddbc.common;
+    import ddbc.drivers.mysqlddbc;
+    import ddbc.drivers.pgsqlddbc;
+    import ddbc.drivers.sqliteddbc;
+    import ddbc.common;
     import dstruct.dialects.mysqldialect;
     import dstruct.dialects.sqlitedialect;
     import dstruct.dialects.pgsqldialect;

@@ -1,7 +1,7 @@
 /**
  * DDBC - D DataBase Connector - abstraction layer for RDBMS access, with interface similar to JDBC. 
  * 
- * Source file ddbc/drivers/mysqldstruct.ddbc.d.
+ * Source file ddbc/drivers/mysqlddbc.d.
  *
  * DDBC library attempts to provide implementation independent interface to different databases.
  * 
@@ -16,7 +16,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module dstruct.ddbc.drivers.utils;
+module ddbc.drivers.utils;
 
 private import std.conv : ConvException;
 private import std.datetime : Date, DateTime, TimeOfDay;

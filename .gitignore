@@ -17,6 +17,8 @@ Thumbs.db
 [Dd]ebug*/
 *.sbr
 obj/
+bin/
+lib/
 [Rr]elease*/
 _ReSharper*/
 code.visualdproj

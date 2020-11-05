@@ -16,7 +16,7 @@ import std.conv;
 import dstruct.dialect;
 import dstruct.metadata;
 import dstruct.type;
-import dstruct.ddbc.core;
+import ddbc.core;
 
 
 string[] PGSQL_RESERVED_WORDS = 

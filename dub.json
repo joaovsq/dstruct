@@ -7,7 +7,7 @@
     "dependencies": {
     },
     "targetType": "staticLibrary",
-    "targetPath": "lib",
+    "targetPath": "bin",
     "buildRequirements": [
 		"allowWarnings"
     ],
