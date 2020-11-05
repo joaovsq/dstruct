@@ -5,8 +5,6 @@ A simple ORM for D language.
 
 THIS PROJECT STARTED AS A FORK OF: https://github.com/buggins/hibernated created by Vadim Lopatin.
 
-This project also uses the ddbc API (https://github.com/buggins/ddbc), with some modifications.
-
 All credits to the original author will be maintained.
 
 Why create a fork ?
@@ -18,6 +16,8 @@ All credits to the original author will be maintained in the source code and REA
 
 Libraries
 --------------------
+
+Open source libraries used by DStruct. Some may have been modified to suit the project needs.
 
 * ddbc - https://github.com/buggins/ddbc
 * derelictPQ - https://github.com/DerelictOrg/DerelictPQ
