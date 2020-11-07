@@ -14,7 +14,7 @@ on:
 
 jobs:
   test:
-        name: Dub Tests
+        name: DStruct Tests
         strategy:
             matrix:
                 os: [ubuntu-latest]
@@ -39,11 +39,11 @@ jobs:
                     sudo apt-get -y install postgresql
 
             - name: Run tests
-              run: dub test
+              run: dub test --config=sqlite
           
             - name: run the hdtest project
               working-directory: hdtest
-              run: dub run --config=pgsql
+              run: dub run --config=sqlite
               
   build:
         name: DStruct build
