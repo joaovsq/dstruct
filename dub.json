@@ -24,7 +24,7 @@
                 "libs/linux64/libpq.so"
             ],
             "copyFiles-windows-x86_64": [
-                "libs/linux64/libpq.dll"
+                "libs/win64/libpq.dll"
             ]
         },
         {
