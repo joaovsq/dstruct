@@ -1,6 +1,7 @@
 {
     "dscanner.ignoredKeys": [
         "dscanner.style.undocumented_declaration",
-        "dscanner.suspicious.local_imports"
+        "dscanner.suspicious.local_imports",
+        "dscanner.style.alias_syntax"
     ]
 }

@@ -11,10 +11,14 @@ import std.traits;
 class User
 {
     long id;
+
     string name;
+
     int some_field_with_underscore;
+
     @ManyToMany // cannot be inferred, requires annotation
     LazyCollection!Role roles;
+
     //@ManyToOne
     MyGroup group;
 
@@ -89,16 +93,17 @@ void testHibernate()
     else version (USE_PGSQL)
     {
         import dstruct.ddbc.drivers.pgsqlddbc;
+
         writeln("Using postgres for tests....");
 
-        string url = PGSQLDriver.generateUrl( "127.0.0.1", 5432, "dstruct_tests" );
+        string url = PGSQLDriver.generateUrl("127.0.0.1", 5432, "dstruct_tests");
 
         string[string] params;
         params["user"] = "dstruct";
         params["password"] = "dstruct";
         params["ssl"] = "true";
         PGSQLDriver driver = new PGSQLDriver();
-        DataSource ds = new ConnectionPoolDataSourceImpl(driver,url, params);
+        DataSource ds = new ConnectionPoolDataSourceImpl(driver, url, params);
         Dialect dialect = new PGSQLDialect();
     }
 
@@ -111,19 +116,22 @@ void testHibernate()
     writeln("Creating session factory");
     // create session factory
     SessionFactory factory = new SessionFactoryImpl(schema, dialect, ds);
-    scope(exit) factory.close();
+    scope (exit)
+        factory.close();
 
     writeln("Creating DB schema");
     DBInfo db = factory.getDBMetaData();
     {
         Connection conn = ds.getConnection();
-        scope(exit) conn.close();
+        scope (exit)
+            conn.close();
         db.updateDBSchema(conn, true, true);
     }
 
     // create session
     Session sess = factory.openSession();
-    scope(exit) sess.close();
+    scope (exit)
+        sess.close();
 
     // use session to access DB
 
@@ -177,10 +185,10 @@ void testHibernate()
     u13.roles = [r10, r11];
     u13.group = grp2;
 
-    writeln("saving group 1-2-3" );
-    sess.save( grp1 );
-    sess.save( grp2 );
-    sess.save( grp3 );
+    writeln("saving group 1-2-3");
+    sess.save(grp1);
+    sess.save(grp2);
+    sess.save(grp3);
 
     writeln("Saving Role r10: " ~ r10.name);
     sess.save(r10);
@@ -199,8 +207,9 @@ void testHibernate()
 
     writeln("Loading User");
     // load and check data
-    auto qresult = sess.createQuery("FROM User WHERE name=:Name and some_field_with_underscore != 42").setParameter("Name", "Alex");
-    writefln( "query result: %s", qresult.listRows() );
+    auto qresult = sess.createQuery("FROM User WHERE name=:Name and some_field_with_underscore != 42")
+        .setParameter("Name", "Alex");
+    writefln("query result: %s", qresult.listRows());
     User u11 = qresult.uniqueResult!User();
     //User u11 = sess.createQuery("FROM User WHERE name=:Name and some_field_with_underscore != 42").setParameter("Name", "Alex").uniqueResult!User();
     writefln("Checking User 11 : %s", u11);
@@ -234,7 +243,8 @@ void testHibernate()
 
     // now test something else
     writeln("Test retrieving users by group... (ManyToOne relationship)");
-    auto qUsersByGroup = sess.createQuery("FROM User WHERE group=:group_id").setParameter("group_id", grp2.id);
+    auto qUsersByGroup = sess.createQuery("FROM User WHERE group=:group_id")
+        .setParameter("group_id", grp2.id);
     User[] usersByGroup = qUsersByGroup.list!User();
     assert(usersByGroup.length == 2); // user 2 and user 2
 
