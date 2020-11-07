@@ -20,80 +20,110 @@ import std.string;
 import dstruct.metadata;
 
 /// Represents a dialect of SQL implemented by a particular RDBMS. -- generated from JavaDocs on org.hibernate.dialect.Dialect
-abstract class Dialect {
+abstract class Dialect
+{
 
     // returns string like "BIGINT(20) NOT NULL" or "VARCHAR(255) NULL"
     string getColumnTypeDefinition(const PropertyInfo pi, const PropertyInfo overrideTypeFrom = null);
 
     // returns string like "`columnname` BIGINT(20) NOT NULL" or "VARCHAR(255) NULL"
-    string getColumnDefinition(const PropertyInfo pi) {
+    string getColumnDefinition(const PropertyInfo pi)
+    {
         return quoteIfNeeded(pi.columnName) ~ " " ~ getColumnTypeDefinition(pi);
     }
-    
+
     ///The character specific to this dialect used to close a quoted identifier.
     char closeQuote() const;
     ///The character specific to this dialect used to begin a quoted identifier.
-    char  openQuote() const;
+    char openQuote() const;
     ///Apply dialect-specific quoting (for `quoted` identifier, replace backtick quotes with dialect specific)
-    string quote(string name) const {
+    string quote(string name) const
+    {
         //Apply dialect-specific quoting.
         //By default, the incoming value is checked to see if its first character is the back-tick (`). If so, the dialect specific quoting is applied. 
-        if (name.length <=2 || name[0] != openQuote)
+        if (name.length <= 2 || name[0] != openQuote)
             return name;
-        return openQuote() ~ name[1..$-1] ~ closeQuote();
+        return openQuote() ~ name[1 .. $ - 1] ~ closeQuote();
     }
 
-	// should return true for identifiers which cannot be used w/o quote (e.g. keywords)
-	bool needQuote(string ident) const {
-		return (toUpper(ident) in keywordList) !is null;
-	}
+    // should return true for identifiers which cannot be used w/o quote (e.g. keywords)
+    bool needQuote(string ident) const
+    {
+        return (toUpper(ident) in keywordList) !is null;
+    }
 
-	string quoteIfNeeded(string ident) const {
-		if (needQuote(ident))
-			return quote(openQuote ~ ident ~ closeQuote);
-		return quote(ident);
-	}
+    string quoteIfNeeded(string ident) const
+    {
+        if (needQuote(ident))
+            return quote(openQuote ~ ident ~ closeQuote);
+        return quote(ident);
+    }
 
-	protected int[string] keywordList;
+    protected int[string] keywordList;
 
-	protected void addKeywords(string[] keywords) {
-		foreach(s; keywords) {
-			keywordList[s] = 1;
-		}
-	}
+    protected void addKeywords(string[] keywords)
+    {
+        foreach (s; keywords)
+        {
+            keywordList[s] = 1;
+        }
+    }
 
-    string getDropIndexSQL(string tableName, string indexName) {
+    string getDropIndexSQL(string tableName, string indexName)
+    {
         return "DROP INDEX " ~ quoteIfNeeded(indexName) ~ " ON " ~ quoteIfNeeded(tableName);
     }
-    string getDropForeignKeySQL(string tableName, string indexName) {
-        return "ALTER TABLE " ~ quoteIfNeeded(tableName) ~ " DROP FOREIGN KEY " ~ quoteIfNeeded(indexName);
+
+    string getDropForeignKeySQL(string tableName, string indexName)
+    {
+        return "ALTER TABLE " ~ quoteIfNeeded(
+                tableName) ~ " DROP FOREIGN KEY " ~ quoteIfNeeded(indexName);
     }
-    string getIndexSQL(string tableName, string indexName, string[] columnNames) {
-        return "CREATE INDEX " ~ quoteIfNeeded(indexName) ~ " ON " ~ quoteIfNeeded(tableName) ~ createFieldListSQL(columnNames);
+
+    string getIndexSQL(string tableName, string indexName, string[] columnNames)
+    {
+        return "CREATE INDEX " ~ quoteIfNeeded(indexName) ~ " ON " ~ quoteIfNeeded(
+                tableName) ~ createFieldListSQL(columnNames);
     }
-    string getUniqueIndexSQL(string tableName, string indexName, string[] columnNames) {
-        return "CREATE UNIQUE INDEX " ~ quoteIfNeeded(indexName) ~ " ON " ~ quoteIfNeeded(tableName) ~ createFieldListSQL(columnNames);
+
+    string getUniqueIndexSQL(string tableName, string indexName, string[] columnNames)
+    {
+        return "CREATE UNIQUE INDEX " ~ quoteIfNeeded(indexName) ~ " ON " ~ quoteIfNeeded(
+                tableName) ~ createFieldListSQL(columnNames);
     }
-    string getForeignKeySQL(string tableName, string indexName, string[] columnNames, string referencedTableName, string[] referencedFieldNames) {
+
+    string getForeignKeySQL(string tableName, string indexName, string[] columnNames,
+            string referencedTableName, string[] referencedFieldNames)
+    {
         assert(columnNames.length == referencedFieldNames.length);
-        return "ALTER TABLE " ~ quoteIfNeeded(tableName) ~ " ADD CONSTRAINT " ~ quoteIfNeeded(indexName) ~ " FOREIGN KEY " ~ createFieldListSQL(columnNames) ~ " REFERENCES " ~ quoteIfNeeded(referencedTableName) ~ createFieldListSQL(referencedFieldNames);
+        return "ALTER TABLE " ~ quoteIfNeeded(tableName) ~ " ADD CONSTRAINT " ~ quoteIfNeeded(
+                indexName) ~ " FOREIGN KEY " ~ createFieldListSQL(
+                columnNames) ~ " REFERENCES " ~ quoteIfNeeded(
+                referencedTableName) ~ createFieldListSQL(referencedFieldNames);
     }
-    string getCheckTableExistsSQL(string tableName) {
+
+    string getCheckTableExistsSQL(string tableName)
+    {
         return "SHOW TABLES LIKE " ~ quoteSqlString(tableName);
     }
-    string getUniqueIndexItemSQL(string indexName, string[] columnNames) {
+
+    string getUniqueIndexItemSQL(string indexName, string[] columnNames)
+    {
         return "UNIQUE INDEX " ~ quoteIfNeeded(indexName) ~ " " ~ createFieldListSQL(columnNames);
     }
 
     /// for some of RDBMS it's necessary to pass additional clauses in query to get generated value (e.g. in Postgres - " returing id"
-    string appendInsertToFetchGeneratedKey(string query, const EntityInfo entity) {
+    string appendInsertToFetchGeneratedKey(string query, const EntityInfo entity)
+    {
         return query;
     }
 
     /// returns comma separated quoted identifier list in () parenthesis
-    string createFieldListSQL(string[] fields) {
+    string createFieldListSQL(string[] fields)
+    {
         string res;
-        foreach(s; fields) {
+        foreach (s; fields)
+        {
             if (res.length > 0)
                 res ~= ", ";
             res ~= quoteIfNeeded(s);
@@ -101,35 +131,61 @@ abstract class Dialect {
         return "(" ~ res ~ ")";
     }
 
-	char getStringQuoteChar() {
-		return '\'';
-	}
+    char getStringQuoteChar()
+    {
+        return '\'';
+    }
 
-	string quoteSqlString(string s) {
-		string res = "'";
-		foreach(ch; s) {
-			switch(ch) {
-				case '\'': res ~= "\\\'"; break;
-				case '\"': res ~= "\\\""; break;
-				case '\\': res ~= "\\\\"; break;
-				case '\0': res ~= "\\n"; break;
-				case '\a': res ~= "\\a"; break;
-				case '\b': res ~= "\\b"; break;
-				case '\f': res ~= "\\f"; break;
-				case '\n': res ~= "\\n"; break;
-				case '\r': res ~= "\\r"; break;
-				case '\t': res ~= "\\t"; break;
-				case '\v': res ~= "\\v"; break;
-				default:
-					res ~= ch;
-			}
-		}
-		res ~= "'";
-		//writeln("quoted " ~ s ~ " is " ~ res);
-		return res;
-	}
+    string quoteSqlString(string s)
+    {
+        string res = "'";
+        foreach (ch; s)
+        {
+            switch (ch)
+            {
+            case '\'':
+                res ~= "\\\'";
+                break;
+            case '\"':
+                res ~= "\\\"";
+                break;
+            case '\\':
+                res ~= "\\\\";
+                break;
+            case '\0':
+                res ~= "\\n";
+                break;
+            case '\a':
+                res ~= "\\a";
+                break;
+            case '\b':
+                res ~= "\\b";
+                break;
+            case '\f':
+                res ~= "\\f";
+                break;
+            case '\n':
+                res ~= "\\n";
+                break;
+            case '\r':
+                res ~= "\\r";
+                break;
+            case '\t':
+                res ~= "\\t";
+                break;
+            case '\v':
+                res ~= "\\v";
+                break;
+            default:
+                res ~= ch;
+            }
+        }
+        res ~= "'";
+        //writeln("quoted " ~ s ~ " is " ~ res);
+        return res;
+    }
 
-/+
+    /+
     ///Provided we supportsInsertSelectIdentity(), then attach the "select identity" clause to the insert statement.
     string     appendIdentitySelectToInsert(string insertString);
     ///Some dialects support an alternative means to SELECT FOR UPDATE, whereby a "lock hint" is appends to the table name in the from clause.
@@ -401,12 +457,17 @@ abstract class Dialect {
 +/
 }
 
-
-
-version (USE_MYSQL) {
-} else version (USE_SQLITE) {
-} else version (USE_PGSQL) {
-} else {
-    pragma(msg, "No DB type version definition specified. Add one or more versions to command line: USE_MYSQL, USE_PGSQL, USE_SQLITE");
+version (USE_MYSQL)
+{
 }
-
+else version (USE_SQLITE)
+{
+}
+else version (USE_PGSQL)
+{
+}
+else
+{
+    pragma(msg, "No DB type version definition specified.
+                Add one or more versions to command line: USE_MYSQL, USE_PGSQL, USE_SQLITE");
+}
