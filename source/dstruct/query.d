@@ -1,10 +1,10 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
  * Hibernate documentation can be found here:
  * $(LINK http://hibernate.org/docs)$(BR)
  * 
- * Source file hibernated/core.d.
+ * Source file dstruct/core.d.
  *
  * This module contains HQL query parser and HQL to SQL transform implementation.
  * 
@@ -99,7 +99,7 @@ class FromClause {
         return items[0];
     }
     FromClauseItem opIndex(int index) {
-        enforceHelper!HibernatedException(index >= 0 && index < items.length, "FromClause index out of range: " ~ to!string(index));
+        enforceHelper!DStructException(index >= 0 && index < items.length, "FromClause index out of range: " ~ to!string(index));
         return items[index];
     }
     FromClauseItem opIndex(string aliasName) {
@@ -1650,7 +1650,7 @@ class ParsedQuery {
 	}
 	int[] getParam(string paramName) {
 		if ((paramName in params) is null) {
-			throw new HibernatedException("Parameter " ~ paramName ~ " not found in query " ~ _hql);
+			throw new DStructException("Parameter " ~ paramName ~ " not found in query " ~ _hql);
 		} else {
 			return params[paramName];
 		}

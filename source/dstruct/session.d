@@ -1,12 +1,12 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
  * Hibernate documentation can be found here:
  * $(LINK http://hibernate.org/docs)$(BR)
  * 
- * Source file hibernated/session.d.
+ * Source file dstruct/session.d.
  *
- * This module contains implementation of Hibernated SessionFactory and Session classes.
+ * This module contains implementation of DStruct SessionFactory and Session classes.
  * 
  * Copyright: Copyright 2013
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
@@ -40,7 +40,7 @@ static if(__VERSION__ < 2080) {
 
 const TRACE_REFS = false;
 
-/// Factory to create HibernateD Sessions - similar to org.hibernate.SessionFactory
+/// Factory to create DStruct Sessions - similar to org.hibernate.SessionFactory
 interface SessionFactory {
     /// close all active sessions
 	void close();
@@ -264,7 +264,7 @@ class SessionAccessor {
     }
 }
 
-/// Implementation of HibernateD session
+/// Implementation of DStruct session
 class SessionImpl : Session {
 
     private bool closed;
@@ -331,17 +331,17 @@ class SessionImpl : Session {
     }
 
     override Transaction beginTransaction() {
-        throw new HibernatedException("Method not implemented");
+        throw new DStructException("Method not implemented");
     }
     override void cancelQuery() {
-        throw new HibernatedException("Method not implemented");
+        throw new DStructException("Method not implemented");
     }
     override void clear() {
-        throw new HibernatedException("Method not implemented");
+        throw new DStructException("Method not implemented");
     }
     ///Does this session contain any changes which must be synchronized with the database? In other words, would any DML operations be executed if we flushed this session?
     override bool isDirty() {
-        throw new HibernatedException("Method not implemented");
+        throw new DStructException("Method not implemented");
     }
     /// Check if the session is still open.
     override bool isOpen() {
@@ -364,7 +364,7 @@ class SessionImpl : Session {
     }
     ///Check if this instance is associated with this Session
     override bool contains(Object object) {
-        throw new HibernatedException("Method not implemented");
+        throw new DStructException("Method not implemented");
     }
     override SessionFactory getSessionFactory() {
         checkClosed();
@@ -623,7 +623,7 @@ class SessionImpl : Session {
 	}
 }
 
-/// Implementation of HibernateD SessionFactory
+/// Implementation of DStruct SessionFactory
 class SessionFactoryImpl : SessionFactory {
 //    Configuration cfg;
 //    Mapping mapping;
@@ -835,7 +835,7 @@ class PropertyLoadMap {
     }
 }
 
-/// Implementation of HibernateD Query
+/// Implementation of DStruct Query
 class QueryImpl : Query
 {
 	SessionImpl sess;

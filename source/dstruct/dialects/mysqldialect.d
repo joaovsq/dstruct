@@ -1,7 +1,7 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
- * Source file hibernated/dialects/mysqldialect.d.
+ * Source file dstruct/dialects/mysqldialect.d.
  *
  * This module contains implementation of MySQLDialect class which provides implementation specific SQL syntax information.
  * 

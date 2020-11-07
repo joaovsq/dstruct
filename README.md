@@ -148,7 +148,7 @@ int main() {
         factory.getDBMetaData().updateDBSchema(conn, false, true);
     }
 
-    // Now you can use HibernateD
+    // Now you can use DStruct
 
     // create session
     Session sess = factory.openSession();

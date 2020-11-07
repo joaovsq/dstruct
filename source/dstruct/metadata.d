@@ -1,10 +1,10 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
  * Hibernate documentation can be found here:
  * $(LINK http://hibernate.org/docs)$(BR)
  * 
- * Source file hibernated/metadata.d.
+ * Source file dstruct/metadata.d.
  *
  * This module contains implementation of Annotations parsing and ORM model metadata holder classes.
  * 
@@ -491,11 +491,11 @@ unittest {
 }
 
 /// returns true if class member has at least one known property level annotation (@Column, @Id, @Generated)
-template hasHibernatedPropertyAnnotation(T, string m) {
-    enum bool hasHibernatedPropertyAnnotation = hasOneOfMemberAnnotations!(T, m, Id, Column, OneToOne, ManyToOne, ManyToMany, OneToMany, Generated, Generator);
+template hasDStructPropertyAnnotation(T, string m) {
+    enum bool hasDStructPropertyAnnotation = hasOneOfMemberAnnotations!(T, m, Id, Column, OneToOne, ManyToOne, ManyToMany, OneToMany, Generated, Generator);
 }
 
-bool hasHibernatedClassOrPropertyAnnotation(T)() {
+bool hasDStructClassOrPropertyAnnotation(T)() {
     static if (hasOneOfAnnotations!(T, Entity, Embeddable, Table)) {
         return true;
     } else {
@@ -503,7 +503,7 @@ bool hasHibernatedClassOrPropertyAnnotation(T)() {
         foreach (m; __traits(allMembers, T)) {
             static if (__traits(compiles, (typeof(__traits(getMember, T, m))))){
                 static if (__traits(getProtection, __traits(getMember, T, m)) == "public") {
-                    static if (hasHibernatedPropertyAnnotation!(T, m)) {
+                    static if (hasDStructPropertyAnnotation!(T, m)) {
                         hasAnnotation = true;
                         break;
                     }
@@ -1110,7 +1110,7 @@ template hasPublicField(T : Object, string m) {
 
 template hasPublicFieldWithAnnotation(T : Object, string m) {
     static if (hasPublicField!(T, m)) {
-        enum bool hasPublicFieldWithAnnotation = hasHibernatedPropertyAnnotation!(T, m);
+        enum bool hasPublicFieldWithAnnotation = hasDStructPropertyAnnotation!(T, m);
     } else {
         enum bool hasPublicFieldWithAnnotation = false;
     }
@@ -1184,7 +1184,7 @@ template isValidGetter(T : Object, string m) {
 template isValidGetterWithAnnotation(T : Object, string m) {
     // it's public member with get or is prefix
     static if (isValidGetter!(T, m)) {
-        enum bool isValidGetterWithAnnotation = hasHibernatedPropertyAnnotation!(T,m); 
+        enum bool isValidGetterWithAnnotation = hasDStructPropertyAnnotation!(T,m); 
     } else {
         enum bool isValidGetterWithAnnotation = false; 
     }
@@ -1194,7 +1194,7 @@ bool isMainMemberForProperty(T : Object, string m)() {
     // skip non-public members
     static if (hasPublicMember!(T, m)) {
         alias typeof(__traits(getMember, T, m)) ti;
-        immutable bool thisMemberHasAnnotation = hasHibernatedPropertyAnnotation!(T,m);
+        immutable bool thisMemberHasAnnotation = hasDStructPropertyAnnotation!(T,m);
         static if (is(ti == function)) {
             // function or property
             static if (functionAttributes!ti & FunctionAttribute.property) {
@@ -2976,8 +2976,6 @@ string getEntityDef(T)() {
     generatedEntityInfo ~= hasAnnotation!(T, Embeddable) ? "true," : "false,";
     generatedEntityInfo ~= "[\n";
 
-    //pragma(msg, entityName ~ " : " ~ ((hasHibernatedEmbeddableAnnotation!T) ? "true," : "false,"));
-
     foreach (m; __traits(allMembers, T)) {
         //pragma(msg, m);
 
@@ -2988,7 +2986,7 @@ string getEntityDef(T)() {
 
                 alias typeof(__traits(getMember, T, m)) ti;
 
-                // hasHibernatedPropertyAnnotation!(T, m) &&
+                // hasDStructPropertyAnnotation!(T, m) &&
                 // automatically treat all public members of supported types as persistent
                 immutable bool typeSupported = (isSupportedSimpleType!(T, m) || isObjectMember!(T, m) || isCollectionMember!(T, m));
                 immutable bool isMainProp = isMainMemberForProperty!(T,m) && !hasMemberAnnotation!(T, m, Transient);
@@ -3066,7 +3064,7 @@ string entityListDef(T ...)() {
                 static if (__traits(compiles, isImplicitlyConvertible!((__traits(getMember, t, tt)), Object)) && isImplicitlyConvertible!((__traits(getMember, t, tt)), Object)) {
                     //pragma(msg, "checking member" ~ (__traits(getMember, t, tt)).stringof);
                     // import class metadata if class or any of its members has hibenrated annotation
-                    static if (hasHibernatedClassOrPropertyAnnotation!(__traits(getMember, t, tt))) {
+                    static if (hasDStructClassOrPropertyAnnotation!(__traits(getMember, t, tt))) {
                         // class should not be marked as @Transient
                         static if (!hasAnnotation!(__traits(getMember, t, tt), Transient)) {
                             immutable string def = getEntityDef!(__traits(getMember, t, tt));
@@ -3435,7 +3433,7 @@ class SchemaInfoImpl(T...) : SchemaInfo {
     }
 }
 
-/// information about DB structure generated from HibernateD entity metadata
+/// information about DB structure generated from DStruct entity metadata
 class DBInfo {
     Dialect dialect;
     EntityMetaData metaData;
@@ -3456,7 +3454,7 @@ class DBInfo {
     TableInfo[string] tableNameMap;
     TableInfo get(string tableName) {
         TableInfo res = find(tableName);
-        enforceHelper!HibernatedException(res !is null, "table " ~ tableName ~ " is not found in schema");
+        enforceHelper!DStructException(res !is null, "table " ~ tableName ~ " is not found in schema");
         return res;
     }
     TableInfo find(string tableName) {
@@ -3465,7 +3463,7 @@ class DBInfo {
         return tableNameMap[tableName];
     }
     void add(TableInfo table) {
-        enforceHelper!HibernatedException((table.tableName in tableNameMap) is null, "duplicate table " ~ table.tableName ~ " in schema");
+        enforceHelper!DStructException((table.tableName in tableNameMap) is null, "duplicate table " ~ table.tableName ~ " in schema");
         tables ~= table;
         tableNameMap[table.tableName] = table;
     }
@@ -3494,7 +3492,7 @@ class DBInfo {
                 stmt.executeUpdate(sql);
             }
         } catch (Throwable e) {
-            throw new HibernatedException(e);
+            throw new DStructException(e);
         }
     }
 
@@ -3511,7 +3509,7 @@ class DBInfo {
                     res ~= table.tableName;
             }
         } catch (Throwable e) {
-            throw new HibernatedException(e);
+            throw new DStructException(e);
         }
         return res;
     }
@@ -3547,7 +3545,7 @@ class DBInfo {
     }
     TableInfo opIndex(string tableName) {
         TableInfo ti = find(tableName);
-        enforceHelper!HibernatedException(ti !is null, "Table " ~ tableName ~ " is not found in schema");
+        enforceHelper!DStructException(ti !is null, "Table " ~ tableName ~ " is not found in schema");
         return ti;
     }
     private static TableInfo[] addTableSorted(TableInfo[] list, TableInfo table) {
@@ -3626,7 +3624,7 @@ class TableInfo {
 
     ColumnInfo opIndex(string columnName) {
         ColumnInfo ti = find(columnName);
-        enforceHelper!HibernatedException(ti !is null, "Column " ~ columnName ~ " is not found in table " ~ tableName);
+        enforceHelper!DStructException(ti !is null, "Column " ~ columnName ~ " is not found in table " ~ tableName);
         return ti;
     }
 
@@ -3663,7 +3661,7 @@ class TableInfo {
         TableInfo t = new TableInfo(schema, entity, pi.referencedEntity, pi.joinTable);
         TableInfo existing = schema.find(t.tableName);
         if (existing !is null) {
-            enforceHelper!HibernatedException(t.getCreateTableSQL() == existing.getCreateTableSQL(), "JoinTable structure in " ~ entity.name ~ " and " ~ pi.referencedEntityName ~ " do not match");
+            enforceHelper!DStructException(t.getCreateTableSQL() == existing.getCreateTableSQL(), "JoinTable structure in " ~ entity.name ~ " and " ~ pi.referencedEntityName ~ " do not match");
         } else {
             schema.add(t);
         }
@@ -3693,7 +3691,7 @@ class TableInfo {
         indexes ~= index;
     }
     void addColumn(ColumnInfo column) {
-        enforceHelper!HibernatedException((column.columnName in columnNameMap) is null, "duplicate column name " ~ tableName ~ "." ~ column.columnName ~ " in schema");
+        enforceHelper!DStructException((column.columnName in columnNameMap) is null, "duplicate column name " ~ tableName ~ "." ~ column.columnName ~ " in schema");
         columns ~= column;
         columnNameMap[column.columnName] = column;
         if (column.property !is null && (column.property.manyToOne || column.property.oneToOne)) {
@@ -3739,7 +3737,7 @@ class TableInfo {
                 if ((index.referencedTable in visitedTables) is null) {
                     // not yet visited
                     TableInfo t = schema.find(index.referencedTable);
-                    enforceHelper!HibernatedException(t !is null, "Table " ~ index.referencedTable ~ " referenced in index " ~ index.indexName ~ " is not found in schema");
+                    enforceHelper!DStructException(t !is null, "Table " ~ index.referencedTable ~ " referenced in index " ~ index.indexName ~ " is not found in schema");
                     if (t.references(visitedTables, other))
                         return true;
                 }

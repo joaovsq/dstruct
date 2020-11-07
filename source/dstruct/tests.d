@@ -1,10 +1,10 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
  * Hibernate documentation can be found here:
  * $(LINK http://hibernate.org/docs)$(BR)
  * 
- * Source file hibernated/tests.d.
+ * Source file dstruct/tests.d.
  *
  * This module contains unit tests for functional testing on real DB.
  * 

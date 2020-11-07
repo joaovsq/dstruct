@@ -1,19 +1,19 @@
 {
-    "name": "ddbctest",
-    "description": "example1 for Hibernated",
-    "authors": ["Vadim Lopatin"],
-    "homepage": "https://github.com/buggins/hibernated",
-    "license": "Boost Software License (BSL 1.0)",
+    "name": "example1",
+    "description": "example1 for DStruct",
+    "authors": ["Vadim Lopatin", "João V."],
+    "homepage": "https://github.com/joaovsq/dstruct",
+    "license": "BSL-1.0",
     "buildRequirements": ["allowWarnings"],
     "dependencies": {
-        "hibernated": {"path": "../../"}
+        "dstruct": {"path": "../../"}
     },
     "targetType": "executable",
     "configurations": [
         {
             "name": "default",
             "subConfigurations": {
-                "hibernated": "SQLite"
+                "dstruct": "pgsql"
             }
         }
     ]

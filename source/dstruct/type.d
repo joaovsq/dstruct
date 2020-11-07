@@ -1,10 +1,10 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
  * Hibernate documentation can be found here:
  * $(LINK http://hibernate.org/docs)$(BR)
  * 
- * Source file hibernated/type.d.
+ * Source file dstruct/type.d.
  *
  * This module contains declarations of property type description classes.
  * 
@@ -79,32 +79,32 @@ unittest {
 
 // Exception classes
 
-/// base class for all HibernateD exceptions
-class HibernatedException : Exception {
+/// base class for all DStruct exceptions
+class DStructException : Exception {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// Thrown when the user passes a transient instance to a Session method that expects a persistent instance. 
-class TransientObjectException : HibernatedException {
+class TransientObjectException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// Something went wrong in the cache
-class CacheException : HibernatedException {
+class CacheException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// Thrown when the (illegal) value of a property can not be persisted. There are two main causes: a property declared not-null="true" is null or an association references an unsaved transient instance 
-class PropertyValueException : HibernatedException {
+class PropertyValueException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// A problem occurred translating a Hibernate query to SQL due to invalid query syntax, etc. 
-class QueryException : HibernatedException {
+class QueryException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
@@ -122,25 +122,25 @@ class QueryParameterException : QueryException {
 }
 
 /// Indicates that a transaction could not be begun, committed or rolled back. 
-class TransactionException : HibernatedException {
+class TransactionException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// Indicates access to unfetched data outside of a session context. For example, when an uninitialized proxy or collection is accessed after the session was closed. 
-class LazyInitializationException : HibernatedException {
+class LazyInitializationException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// An exception that usually occurs as a result of something screwy in the O-R mappings. 
-class MappingException : HibernatedException {
+class MappingException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// Thrown when Hibernate could not resolve an object by id, especially when loading an association.
-class UnresolvableObjectException : HibernatedException {
+class UnresolvableObjectException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
@@ -158,19 +158,19 @@ class ObjectDeletedException : UnresolvableObjectException {
 }
 
 /// Thrown when the user calls a method of a Session that is in an inappropropriate state for the given call (for example, the the session is closed or disconnected). 
-class SessionException : HibernatedException {
+class SessionException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 /// Thrown when the application calls Query.uniqueResult() and the query returned more than one result. Unlike all other Hibernate exceptions, this one is recoverable! 
-class NonUniqueResultException : HibernatedException {
+class NonUniqueResultException : DStructException {
     this(string msg, string f = __FILE__, size_t l = __LINE__) { super(msg, f, l); }
     this(Throwable causedBy, string f = __FILE__, size_t l = __LINE__) { super(causedBy.msg, f, l); }
 }
 
 
-/// Base class for HibernateD property types
+/// Base class for DStruct property types
 class Type {
 public:
     immutable SqlType getSqlType() { return SqlType.OTHER; }

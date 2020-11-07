@@ -1,12 +1,12 @@
 /**
- * HibernateD - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
+ * DStruct - Object-Relation Mapping for D programming language, with interface similar to Hibernate. 
  * 
  * Hibernate documentation can be found here:
  * $(LINK http://hibernate.org/docs)$(BR)
  * 
- * Source file hibernated/annotations.d.
+ * Source file dstruct/annotations.d.
  *
- * This module contains declarations of HibernateD Annotations - User Defined Attribues used to markup D classes and their properties for ORM.
+ * This module contains declarations of DStruct Annotations - User Defined Attribues used to markup D classes and their properties for ORM.
  * 
  * Copyright: Copyright 2013
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
@@ -17,7 +17,7 @@ module dstruct.annotations;
 
 
 /**
- * @Transient - mark class or field as transient, to not generate HibernateD persistence metadata for it.
+ * @Transient - mark class or field as transient, to not generate DStruct persistence metadata for it.
  * Use this annotation in cases when field you won't persist will be considered as persistent otherwise.
  */
 struct Transient {
@@ -28,7 +28,7 @@ struct Transient {
 /** 
  * Class level annotations.
  * 
- * HibernateD maps values of some class to DB table. This class is referred as Entity.
+ * DStruct maps values of some class to DB table. This class is referred as Entity.
  * 
  * Entity contains one or more properties - which are usually mapped to DB table columns.
  */
