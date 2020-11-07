@@ -23,7 +23,7 @@ import std.conv;
 import std.stdio;
 import std.variant;
 
-import ddbc.core;
+import dstruct.ddbc.core;
 
 import dstruct.annotations;
 import dstruct.metadata;

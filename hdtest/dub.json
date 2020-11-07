@@ -4,23 +4,24 @@
     "authors": [ "Vadim Lopatin", "Arjan Knepper", "João V."],
     "targetType": "executable",
     "targetPath": "bin",
+    "mainSourceFile": "source/htestmain.d",
     "dependencies": {
         "dstruct": {"version": "~master", "path": "../"}
     },
     "buildRequirements": ["allowWarnings"],
     "configurations": [
         {
-            "name": "PGSQL",
+            "name": "pgsql",
             "versions": ["USE_PGSQL"],
             "subConfigurations": {
-                "dstruct": "PGSQL"
+                "dstruct": "pgsql"
             }
         },
         {
-            "name": "SQLite",
+            "name": "sqlite",
             "versions": ["USE_SQLITE"],
             "subConfigurations": {
-                "dstruct": "SQLite"
+                "dstruct": "sqlite"
             }
         }
     ]

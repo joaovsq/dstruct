@@ -19,7 +19,7 @@ import std.stdio;
 import std.traits;
 import std.typecons;
 
-import ddbc.core;
+import dstruct.ddbc.core;
 
 
 // convenient aliases for Nullable types

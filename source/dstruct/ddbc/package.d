@@ -9,7 +9,7 @@ http://docs.oracle.com/javase/7/docs/technotes/guides/jdbc/
 For using DDBC, import this file:
 
 
-    import ddbc;
+    import dstruct.ddbc;
 
 
 
@@ -173,19 +173,19 @@ If you need to get / release connection multiple times, it makes sense to use Co
  License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  Author:   Vadim Lopatin
 */
-module source.ddbc;
+module dstruct.ddbc;
 
-public import ddbc.core;
-public import ddbc.common;
-public import ddbc.pods;
+public import dstruct.ddbc.core;
+public import dstruct.ddbc.common;
+public import dstruct.ddbc.pods;
 
 version( USE_SQLITE )
 {
     // register SQLite driver
-    private import ddbc.drivers.sqliteddbc;
+    private import dstruct.ddbc.drivers.sqliteddbc;
 }
 version( USE_PGSQL )
 {
     // register Postgres driver
-    private import ddbc.drivers.pgsqlddbc;
+    private import dstruct.ddbc.drivers.pgsqlddbc;
 }

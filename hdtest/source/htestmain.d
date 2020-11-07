@@ -7,8 +7,9 @@ import dstruct.core;
 import std.traits;
 
 // Annotations of entity classes
-@Table( "usertests" )
-class User {
+@Table("usertests")
+class User
+{
     long id;
     string name;
     int some_field_with_underscore;
@@ -17,71 +18,81 @@ class User {
     //@ManyToOne
     MyGroup group;
 
-    @OneToMany
-    Address[] addresses;
+    @OneToMany Address[] addresses;
 
     Asset[] assets;
 
-    override string toString() {
+    override string toString()
+    {
         return format("{id:%s, name:%s, roles:%s, group:%s}", id, name, roles, group);
     }
 }
 
-class Role {
+class Role
+{
     int id;
     string name;
     @ManyToMany // w/o this annotation will be OneToMany by convention
     LazyCollection!User users;
 
-    override string toString() {
+    override string toString()
+    {
         return format("{id:%s, name:%s}", id, name);
     }
 }
 
-class Address {
+class Address
+{
     @Generated @Id int id;
     User user;
     string street;
     string town;
     string country;
 
-    override string toString() {
-        return format("{id:%s, user:%s, street:%s, town:%s, country:%s}", id, user, street, town, country);
+    override string toString()
+    {
+        return format("{id:%s, user:%s, street:%s, town:%s, country:%s}", id,
+                user, street, town, country);
     }
 }
 
-class Asset {
+class Asset
+{
     @Generated @Id int id;
     User user;
     string name;
 }
 
-@Entity
-class MyGroup {
+@Entity class MyGroup
+{
     long id;
     string name;
-    @OneToMany
-    LazyCollection!User users;
+    @OneToMany LazyCollection!User users;
 
-    override string toString() {
+    override string toString()
+    {
         return format("{id:%s, name:%s}", id, name);
     }
 }
 
-void testHibernate() {
-    // setup DB connection
-    version( USE_SQLITE )
+void testHibernate()
+{
+    version (USE_SQLITE)
     {
-        import ddbc.drivers.sqliteddbc;
+        import dstruct.ddbc.drivers.sqliteddbc;
+
         SQLITEDriver driver = new SQLITEDriver();
         string[string] params;
         DataSource ds = new ConnectionPoolDataSourceImpl(driver, "dstruct_tests.db", params);
         Dialect dialect = new SQLiteDialect();
     }
-    else version( USE_PGSQL )
+    else version (USE_PGSQL)
     {
-        import ddbc.drivers.pgsqlddbc;
+        import dstruct.ddbc.drivers.pgsqlddbc;
+        writeln("Using postgres for tests....");
+
         string url = PGSQLDriver.generateUrl( "127.0.0.1", 5432, "dstruct_tests" );
+
         string[string] params;
         params["user"] = "dstruct";
         params["password"] = "dstruct";
@@ -94,9 +105,8 @@ void testHibernate() {
     // create metadata from annotations
     writeln("Creating schema from class list");
     EntityMetaData schema = new SchemaInfoImpl!(User, Role, Address, Asset, MyGroup);
-    //writeln("Creating schema from module list");
-    //EntityMetaData schema2 = new SchemaInfoImpl!(htestmain);
-
+    writeln("Creating schema from module list");
+    EntityMetaData schema2 = new SchemaInfoImpl!(htestmain);
 
     writeln("Creating session factory");
     // create session factory

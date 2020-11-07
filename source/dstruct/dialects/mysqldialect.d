@@ -16,7 +16,7 @@ import std.conv;
 import dstruct.dialect;
 import dstruct.metadata;
 import dstruct.type;
-import ddbc.core;
+import dstruct.ddbc.core;
 
 string[] MYSQL_RESERVED_WORDS = 
 	[

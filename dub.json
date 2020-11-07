@@ -8,7 +8,7 @@
     "homepage": "https://github.com/joaovsq/dstruct",
     "license": "BSL-1.0",
     "dependencies": {},
-    "targetType": "staticLibrary",
+    "targetType": "dynamicLibrary",
     "targetPath": "bin",
     "buildRequirements": [
         "allowWarnings"
@@ -16,7 +16,7 @@
     "systemDependencies": "Depending on configuration: ODBC, PostgreSQL and/or SQLite v3",
     "configurations": [
         {
-            "name": "PGSQL",
+            "name": "pgsql",
             "versions": [
                 "USE_PGSQL"
             ],
@@ -25,20 +25,14 @@
             ],
             "copyFiles-windows-x86_64": [
                 "libs/linux64/libpq.dll"
-            ],
-            "subConfigurations": {
-                "ddbc": "PGSQL"
-            }
+            ]
         },
         {
-            "name": "SQLite",
+            "name": "sqlite",
             "versions": [
                 "USE_SQLITE"
             ],
             "libs-posix": [
-                "libsqlite3"
-            ],
-            "libs-windows": [
                 "sqlite3"
             ],
             "copyFiles-windows-x86_64": [

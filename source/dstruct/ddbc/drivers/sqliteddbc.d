@@ -1,7 +1,7 @@
 /**
  * DDBC - D DataBase Connector - abstraction layer for RDBMS access, with interface similar to JDBC. 
  * 
- * Source file ddbc/drivers/pgsqlddbc.d.
+ * Source file ddbc/drivers/pgsqldstruct.ddbc.d.
  *
  * DDBC library attempts to provide implementation independent interface to different databases.
  * 
@@ -18,7 +18,7 @@
  * License:   $(LINK www.boost.org/LICENSE_1_0.txt, Boost License 1.0).
  * Author:   Vadim Lopatin
  */
-module ddbc.drivers.sqliteddbc;
+module dstruct.ddbc.drivers.sqliteddbc;
 
 
 version(USE_SQLITE) {
@@ -46,10 +46,10 @@ version(USE_SQLITE) {
     import std.string;
     import std.variant;
     import core.sync.mutex;
-    import ddbc.common;
-    import ddbc.core;
-    //import ddbc.drivers.sqlite;
-    import ddbc.drivers.utils;
+    import dstruct.ddbc.common;
+    import dstruct.ddbc.core;
+    //import dstruct.ddbc.drivers.sqlite;
+    import dstruct.ddbc.drivers.utils;
     import etc.c.sqlite3;
     import std.traits : isSomeString;
 
@@ -249,7 +249,7 @@ version(USE_SQLITE) {
         assert(ymdthmssUtcPlus2.toISOExtString() == "2019-09-15T15:18:51.5+02:00", ymdthmssUtcPlus2.toISOExtString());
     }
 
-    class SQLITEConnection : ddbc.core.Connection {
+    class SQLITEConnection : dstruct.ddbc.core.Connection {
     private:
         string filename;
 
@@ -403,7 +403,7 @@ version(USE_SQLITE) {
     private:
         SQLITEConnection conn;
         //  Command * cmd;
-        //  ddbc.drivers.mysql.ResultSet rs;
+        //  dstruct.ddbc.drivers.mysql.ResultSet rs;
         SQLITEResultSet resultSet;
         
         bool closed;
@@ -445,7 +445,7 @@ version(USE_SQLITE) {
             }
         }
 
-        override ddbc.core.ResultSet executeQuery(string query) {
+        override dstruct.ddbc.core.ResultSet executeQuery(string query) {
             closePreparedStatement();
             _currentStatement = conn.prepareStatement(query);
             static if(__traits(compiles, (){ import std.experimental.logger; } )) {
@@ -646,7 +646,7 @@ version(USE_SQLITE) {
             return executeUpdate(insertId);
         }
         
-        override ddbc.core.ResultSet executeQuery() {
+        override dstruct.ddbc.core.ResultSet executeQuery() {
             checkClosed();
             lock();
             scope(exit) unlock();
@@ -1160,7 +1160,7 @@ version(USE_SQLITE) {
             params["password"] = password;
             return params;
         }
-        override ddbc.core.Connection connect(string url, string[string] params) {
+        override dstruct.ddbc.core.Connection connect(string url, string[string] params) {
             //writeln("SQLITEDriver.connect " ~ url);
             return new SQLITEConnection(url, params);
         }
@@ -1260,7 +1260,7 @@ version(USE_SQLITE) {
 
     __gshared static this() {
         // register SQLiteDriver
-        import ddbc.common;
+        import dstruct.ddbc.common;
         DriverFactory.registerDriverFactory("sqlite", delegate() { return new SQLITEDriver(); });
     }
 
