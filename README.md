@@ -3,7 +3,7 @@ Warnings
 
 * DStruct is deeply in development mode, so breaking changes will happen.
 
-* For now, DStruct is only supported on Linux, but Windows support can easily be added in the future (unfortunately, i just don't have the time right now).
+* For now, DStruct is only supported on Linux, but Windows support can easily be added in the future (unfortunately, i don't have the time right now).
 
 DStruct | ![master](https://github.com/joaovsq/DStruct/workflows/Default/badge.svg?branch=master)
 ==========
