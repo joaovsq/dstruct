@@ -14,18 +14,23 @@ This project started as a fork of https://github.com/buggins/dstruct created by 
 
 All credits to the original author will be maintained.
 
-Why create a fork ?
+Install
 --------------------
 
-I needed some quick bugfixes and additional features for my personal projects, i also made some different design decisions. This fork is also more self-contained and mostly Posgres focused. So i thought this could be useful to more people.
-
-All credits to the original author will be maintained in the source code and README. The library renaming is just to avoid possible confusions. The license is the same.
+``` dub add dstruct-orm ```
 
 Supported databases
 --------------------
 
 * PostgreSQL
 * SQLite
+
+Why create a fork ?
+--------------------
+
+I needed some quick bugfixes and additional features for my personal projects, i also made some different design decisions. This fork is also more self-contained and mostly Posgres focused. So i thought this could be useful to more people.
+
+All credits to the original author will be maintained in the source code and README. The library renaming is just to avoid possible confusions. The license is the same.
 
 Requirements
 --------------------
@@ -47,12 +52,6 @@ Open source libraries used by DStruct. Some may have been modified to suit the p
 * ddbc - https://github.com/buggins/ddbc
 * derelictPQ - https://github.com/DerelictOrg/DerelictPQ
 * derelictUtils - https://github.com/DerelictOrg/DerelictUtil
-
-About the codebase
---------------------
-
-* Follow D style conventions (https://dlang.org/dstyle.html).
-* C/C++ bindings should be in the source code and not as separated dub packages.
 
 Sample code:
 --------------------
@@ -201,3 +200,9 @@ int main() {
     return 0;
 }
 ```
+
+About the codebase
+--------------------
+
+* Follow D style conventions (https://dlang.org/dstyle.html).
+* C/C++ bindings should be in the source code and not as separated dub packages.
