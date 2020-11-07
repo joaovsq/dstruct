@@ -1,0 +1,70 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: Default
+
+on:
+  schedule:
+    - cron: '30 7 1 * *'
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+        name: Dub Tests
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+                dc: [dmd-latest, ldc-latest, dmd-2.094.1, ldc-1.24.0]
+
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install D compiler
+              uses: dlang-community/setup-dlang@v1
+              with:
+                  compiler: ${{ matrix.dc }}
+
+            - name: Install dependencies on Ubuntu
+              if: startsWith(matrix.os, 'ubuntu')
+              run: | 
+                    sudo apt-get update && sudo apt-get install libevent-dev libsqlite3-dev -y
+                    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+                    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+                    sudo apt-get update
+                    sudo apt-get -y install postgresql
+
+            - name: Run tests
+              run: dub test
+          
+            - name: run the hdtest project
+              working-directory: hdtest
+              run: dub run --config=pgsql
+              
+  build:
+        name: DStruct build
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+                dc: [dmd-latest, ldc-latest, dmd-2.094.1, ldc-1.24.0]
+
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install D compiler
+              uses: dlang-community/setup-dlang@v1
+              with:
+                  compiler: ${{ matrix.dc }}
+
+            - name: Install dependencies on Ubuntu
+              if: startsWith(matrix.os, 'ubuntu')
+              run: sudo apt-get update && sudo apt-get install libpq-dev libevent-dev libsqlite3-dev -y
+
+            - name: build with Postgres config
+              run: dub build --config=pgsql
+  
