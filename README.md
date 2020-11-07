@@ -5,7 +5,7 @@ Warnings
 
 * For now, DStruct is only supported on Linux, but Windows support can easily be added in the future (unfortunately, i just don't have the time right now).
 
-DStruct | ![default](https://github.com/joaovsq/DStruct/workflows/default/badge.svg)
+DStruct | ![master](https://github.com/joaovsq/DStruct/workflows/Default/badge.svg?branch=master)
 ==========
 
 A simple ORM for D language.
