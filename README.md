@@ -1,9 +1,16 @@
+Warnings
+--------------------
+
+* DStruct is deeply in development mode, so breaking changes will happen.
+
+* For now, DStruct is only supported on Linux, but Windows support can easily be added in the future (unfortunately, i just don't have the time right now).
+
 DStruct
 ==========
 
 A simple ORM for D language.
 
-This project started as a fork of https://github.com/buggins/hibernated created by Vadim Lopatin.
+This project started as a fork of https://github.com/buggins/dstruct created by Vadim Lopatin.
 
 All credits to the original author will be maintained.
 
@@ -13,6 +20,12 @@ Why create a fork ?
 I needed some quick bugfixes and additional features for my personal projects, i also made some different design decisions. This fork is also more self-contained and mostly Posgres focused. So i thought this could be useful to more people.
 
 All credits to the original author will be maintained in the source code and README. The library renaming is just to avoid possible confusions. The license is the same.
+
+Supported databases
+--------------------
+
+* PostgreSQL
+* SQLite
 
 Requirements
 --------------------
@@ -24,7 +37,7 @@ Ubuntu 18.04
 
 Windows 
 
-* 
+* TODO 
 
 Libraries
 --------------------
@@ -45,7 +58,7 @@ Sample code:
 --------------------
 
 ```D
-import hibernated.core;
+import dstruct.core;
 import std.algorithm;
 
 
