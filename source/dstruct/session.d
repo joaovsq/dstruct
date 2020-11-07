@@ -1049,9 +1049,9 @@ class PropertyLoadMap
         return _map.keys;
     }
 
-    static void add(const PropertyInfo property, Variant id, Object obj)
+    final void add(const PropertyInfo property, Variant id, Object obj)
     {
-        const auto item = opIndex(property);
+        auto item = opIndex(property);
         item.add(id, obj);
     }
 }
