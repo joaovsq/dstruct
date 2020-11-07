@@ -3,11 +3,11 @@ module htestmain;
 import std.stdio;
 import std.string;
 import std.conv;
-import hibernated.core;
+import dstruct.core;
 import std.traits;
 
 // Annotations of entity classes
-@Table( "gebruiker" )
+@Table( "usertests" )
 class User {
     long id;
     string name;
@@ -75,16 +75,16 @@ void testHibernate() {
         import ddbc.drivers.sqliteddbc;
         SQLITEDriver driver = new SQLITEDriver();
         string[string] params;
-        DataSource ds = new ConnectionPoolDataSourceImpl(driver, "zzz.db", params);
+        DataSource ds = new ConnectionPoolDataSourceImpl(driver, "dstruct_tests.db", params);
         Dialect dialect = new SQLiteDialect();
     }
     else version( USE_PGSQL )
     {
         import ddbc.drivers.pgsqlddbc;
-        string url = PGSQLDriver.generateUrl( "/tmp", 5432, "testdb" );
+        string url = PGSQLDriver.generateUrl( "127.0.0.1", 5432, "dstruct_tests" );
         string[string] params;
-        params["user"] = "hdtest";
-        params["password"] = "secret";
+        params["user"] = "dstruct";
+        params["password"] = "dstruct";
         params["ssl"] = "true";
         PGSQLDriver driver = new PGSQLDriver();
         DataSource ds = new ConnectionPoolDataSourceImpl(driver,url, params);
@@ -110,7 +110,6 @@ void testHibernate() {
         scope(exit) conn.close();
         db.updateDBSchema(conn, true, true);
     }
-
 
     // create session
     Session sess = factory.openSession();

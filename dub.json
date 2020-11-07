@@ -1,33 +1,49 @@
 {
     "name": "dstruct",
     "description": "ORM for D language, similar to Hibernate",
-    "authors": ["Vadim Lopatin", "João V."],
+    "authors": [
+        "Vadim Lopatin",
+        "João V."
+    ],
     "homepage": "https://github.com/joaovsq/dstruct",
     "license": "BSL-1.0",
-    "dependencies": {
-    },
+    "dependencies": {},
     "targetType": "staticLibrary",
     "targetPath": "bin",
     "buildRequirements": [
-		"allowWarnings"
+        "allowWarnings"
     ],
     "systemDependencies": "Depending on configuration: ODBC, PostgreSQL and/or SQLite v3",
     "configurations": [
         {
             "name": "PGSQL",
-            "versions": ["USE_PGSQL"],
-            "libs-posix": ["libpq-dev"],
-            "libs-windows": ["libpq"],
+            "versions": [
+                "USE_PGSQL"
+            ],
+            "copyFiles-linux-x86_64": [
+                "libs/linux64/libpq.so"
+            ],
+            "copyFiles-windows-x86_64": [
+                "libs/linux64/libpq.dll"
+            ],
             "subConfigurations": {
                 "ddbc": "PGSQL"
             }
         },
         {
             "name": "SQLite",
-            "versions": ["USE_SQLITE"],
-            "libs-posix": ["sqlite3"],
-            "libs-windows": ["sqlite3"],
-            "copyFiles-windows-x86_64": [ "libs/win64/sqlite3.dll" ]
+            "versions": [
+                "USE_SQLITE"
+            ],
+            "libs-posix": [
+                "libsqlite3"
+            ],
+            "libs-windows": [
+                "sqlite3"
+            ],
+            "copyFiles-windows-x86_64": [
+                "libs/win64/sqlite3.dll"
+            ]
         }
     ]
 }

@@ -14,6 +14,18 @@ I needed some quick bugfixes and additional features for my personal projects, i
 
 All credits to the original author will be maintained in the source code and README. The library renaming is just to avoid possible confusions. The license is the same.
 
+Requirements
+--------------------
+
+Ubuntu 18.04
+
+* libpq-dev
+* libsqlite3-dev
+
+Windows 
+
+* 
+
 Libraries
 --------------------
 

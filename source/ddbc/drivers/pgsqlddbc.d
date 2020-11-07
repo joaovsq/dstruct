@@ -230,15 +230,15 @@ version(USE_PGSQL) {
     	/// change parameters if necessary
     	const string PGSQL_UNITTEST_HOST = "localhost";
     	const int    PGSQL_UNITTEST_PORT = 5432;
-    	const string PGSQL_UNITTEST_USER = "postgres"; // "testuser";
-    	const string PGSQL_UNITTEST_PASSWORD = ""; // "testpassword";
-    	const string PGSQL_UNITTEST_DB = "testdb";
+    	const string PGSQL_UNITTEST_USER = "dstruct"; // "testuser";
+    	const string PGSQL_UNITTEST_PASSWORD = "dstruct"; // "testpassword";
+    	const string PGSQL_UNITTEST_DB = "dstruct_tests";
     	
     	static if (PGSQL_TESTS_ENABLED) {
     		/// use this data source for tests
     		DataSource createUnitTestPGSQLDataSource() {
                 //string url = makeDDBCUrl("postgresql", PGSQL_UNITTEST_HOST, PGSQL_UNITTEST_PORT, PGSQL_UNITTEST_DB);
-                string url = "ddbc:postgresql://localhost:5432/testdb";
+                string url = "ddbc:postgresql://localhost:5432/dstruct_tests";
 
                 string[string] params;
                 setUserAndPassword(params, PGSQL_UNITTEST_USER, PGSQL_UNITTEST_PASSWORD);

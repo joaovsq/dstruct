@@ -1,7 +1,7 @@
 {
     "name": "hdtest",
-    "description": "test hiberbated.",
-    "authors": [ "Vadim Lopatin", "Arjan Knepper" ],
+    "description": "test dstruct",
+    "authors": [ "Vadim Lopatin", "Arjan Knepper", "João V."],
     "targetType": "executable",
     "targetPath": "bin",
     "dependencies": {
@@ -10,31 +10,17 @@
     "buildRequirements": ["allowWarnings"],
     "configurations": [
         {
-            "name": "full",
-            "versions": ["USE_MYSQL", "USE_SQLITE", "USE_PGSQL"],
+            "name": "PGSQL",
+            "versions": ["USE_PGSQL"],
             "subConfigurations": {
-                "hibernated": "full"
-            }
-        },
-        {
-            "name": "MySQL",
-            "versions": ["USE_MYSQL"],
-            "subConfigurations": {
-                "hibernated": "MySQL"
+                "dstruct": "PGSQL"
             }
         },
         {
             "name": "SQLite",
             "versions": ["USE_SQLITE"],
             "subConfigurations": {
-                "hibernated": "SQLite"
-            }
-        },
-        {
-            "name": "PGSQL",
-            "versions": ["USE_PGSQL"],
-            "subConfigurations": {
-                "hibernated": "PGSQL"
+                "dstruct": "SQLite"
             }
         }
     ]
