@@ -6,7 +6,7 @@
     "targetPath": "bin",
     "mainSourceFile": "source/htestmain.d",
     "dependencies": {
-        "dstruct": {"version": "~master", "path": "../"}
+        "dstruct-orm": {"version": "~master", "path": "../"}
     },
     "buildRequirements": ["allowWarnings"],
     "configurations": [
@@ -14,14 +14,14 @@
             "name": "pgsql",
             "versions": ["USE_PGSQL"],
             "subConfigurations": {
-                "dstruct": "pgsql"
+                "dstruct-orm": "pgsql"
             }
         },
         {
             "name": "sqlite",
             "versions": ["USE_SQLITE"],
             "subConfigurations": {
-                "dstruct": "sqlite"
+                "dstruct-orm": "sqlite"
             }
         }
     ]

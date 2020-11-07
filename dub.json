@@ -1,5 +1,5 @@
 {
-    "name": "dstruct",
+    "name": "dstruct-orm",
     "description": "ORM for D language, similar to Hibernate",
     "authors": [
         "Vadim Lopatin",
